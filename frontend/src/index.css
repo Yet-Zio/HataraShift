@@ -7,3 +7,21 @@
 .useroboto{
     font-family: Roboto;
 }
+
+.usegaretlight{
+    font-family: GaretLight;
+}
+
+.usegaretheavy{
+    font-family: GaretHeavy;
+}
+
+::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+}
+  
+:root {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}

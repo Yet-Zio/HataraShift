@@ -4,7 +4,8 @@ export default function Navbar() {
   return (
     <nav className="flex w-full items-center ps-3">
       <div className="flex items-center">
-        <span className='text-2xl text-black ms-2 hover:cursor-pointer select-none font-semibold' onClick={() => {window.location.href = "/"}}>Hatara<span className='text-gray'>Shift</span></span>
+        <img src="/favicon.png" className='hover:cursor-pointer w-[32px] h-[32px]' onClick={() => {window.location.href = "/"}}/>
+        <span className='text-2xl text-slate-900 ms-2 hover:cursor-pointer select-none font-bold' onClick={() => {window.location.href = "/"}}>HataraShift</span>
       </div>
     </nav>
   )
