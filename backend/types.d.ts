@@ -9,3 +9,10 @@ export interface AuthBody{
     email: string,
     password: string
 }
+
+export interface ShiftBody{
+    date: string,
+    startTime: string,
+    endTime: string,
+    role: string
+}

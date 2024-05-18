@@ -1,6 +1,6 @@
 import { Request, Response, Router } from "express";
 import { authenticateJWT } from "../middlewares/authenticateJWT";
-import { availableShifts, createShift } from "../controllers/shiftController";
+import { availableShifts, bookShift, cancelBookedShift, createShift, viewBookedShifts } from "../controllers/shiftController";
 
 export const shiftRouter = Router()
 
@@ -11,10 +11,10 @@ shiftRouter.post("", authenticateJWT, createShift)
 shiftRouter.get("/available", authenticateJWT, availableShifts)
 
 // Route for booking a shift
-shiftRouter.post("/book/:shiftId", authenticateJWT, availableShifts)
+shiftRouter.post("/book/:shiftId", authenticateJWT, bookShift)
 
 // Route for getting all booked shifts
-shiftRouter.get("/booked", authenticateJWT, availableShifts)
+shiftRouter.get("/booked", authenticateJWT, viewBookedShifts)
 
 // Route for cancelling a booking
-shiftRouter.delete("/book/:shiftId", authenticateJWT, availableShifts)
+shiftRouter.delete("/book/:shiftId", authenticateJWT, cancelBookedShift)
