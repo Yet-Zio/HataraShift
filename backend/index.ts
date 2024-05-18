@@ -11,32 +11,36 @@ import { serverErrorHandler } from "./utils/errorHandler";
 import { authRouter } from "./routes/authRoute";
 import { shiftRouter } from "./routes/shiftRoute";
 
-const app: Express = express()
-const port: string | number = process.env.PORT || 3000
+async function startServer(){
+    const app: Express = express()
+    const port: string | number = process.env.PORT || 3000
 
-app.use(serverCors)
-app.use(express.json())
-app.use(cookieParser())
-app.use(compression())
+    app.use(serverCors)
+    app.use(express.json())
+    app.use(cookieParser())
+    app.use(compression())
 
-connectToMongo()
+    await connectToMongo()
 
-// Routes
+    // Routes
 
-app.get("/", async (req: Request, res: Response) => {
-    res.status(200).send("Hello, you are communicating with HataraShift, the shift booking system.")
-})
+    app.get("/", async (req: Request, res: Response) => {
+        res.status(200).send("Hello, you are communicating with HataraShift, the shift booking system.")
+    })
 
-app.use("/api/auth", authRouter)
-app.use("/api/shifts", shiftRouter)
+    app.use("/api/auth", authRouter)
+    app.use("/api/shifts", shiftRouter)
 
-app.get("*", async (req: Request, res: Response) => {
-    res.status(404).send("Sorry but this route doesn't exist!")
-})
+    app.get("*", async (req: Request, res: Response) => {
+        res.status(404).send("Sorry but this route doesn't exist!")
+    })
 
-// Error handler for every error that occurs within the server
-app.use(serverErrorHandler)
+    // Error handler for every error that occurs within the server
+    app.use(serverErrorHandler)
 
-app.listen(port, () => {
-    console.log(`[server]: Server has started running on http://localhost:${port}`)
-})
+    app.listen(port, () => {
+        console.log(`[server]: Server has started running on http://localhost:${port}`)
+    })
+}
+
+startServer()
