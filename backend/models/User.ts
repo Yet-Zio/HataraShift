@@ -1,5 +1,8 @@
 import { Schema, model } from "mongoose";
 
+/**
+ * An user schema that provides name, email and password attributes
+ */
 const userSchema = new Schema({
     name: {
         type: String,

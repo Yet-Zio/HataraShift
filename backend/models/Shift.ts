@@ -8,6 +8,9 @@ interface IShift extends mongoose.Document {
     bookedBy: mongoose.Types.ObjectId | null
 }
 
+/**
+ * A shift schema that provides date, startTime, endTime, role attributes and an additional bookedBy attribute that references an user
+ */
 const shiftSchema = new Schema({
     date: {
         type: Date,

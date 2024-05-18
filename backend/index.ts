@@ -21,15 +21,20 @@ app.use(compression())
 
 connectToMongo()
 
-// routes
+// Routes
 
 app.get("/", async (req: Request, res: Response) => {
-    res.send("Hello, you are communicating with HataraShift.")
+    res.status(200).send("Hello, you are communicating with HataraShift, the shift booking system.")
 })
 
 app.use("/api/auth", authRouter)
 app.use("/api/shifts", shiftRouter)
 
+app.get("*", async (req: Request, res: Response) => {
+    res.status(404).send("Sorry but this route doesn't exist!")
+})
+
+// Error handler for every error that occurs within the server
 app.use(serverErrorHandler)
 
 app.listen(port, () => {

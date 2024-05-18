@@ -1,5 +1,8 @@
 import cors from 'cors';
 
+/**
+ * The default cors options
+ */
 const corsOptions = {
   origin: "*",
   credentials: true,
