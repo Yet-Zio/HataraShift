@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { login, register } from "../controllers/authController";
+import { login, logout, register } from "../controllers/authController";
 
 export const authRouter = Router()
 
@@ -8,3 +8,6 @@ authRouter.post('/register', register)
 
 // Route for User login
 authRouter.post('/login', login)
+
+// Router for logging out user
+authRouter.post("/logout", logout)

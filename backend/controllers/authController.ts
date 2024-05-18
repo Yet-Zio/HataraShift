@@ -4,10 +4,11 @@ import { errorHandler } from "../utils/errorHandler"
 import { hash, compare } from "bcrypt"
 import { isLength } from "validator"
 import jwt from "jsonwebtoken"
+import { AuthBody } from "../types"
 
 export const register = async (req: Request, res: Response, next: NextFunction) => {
     try{
-        const { name, email, password } = req.body
+        const { name, email, password } : AuthBody = req.body
 
         if(!(name && email && password)){
             return next(errorHandler(400, "INVALID_CREDENTIAL_FORMAT"))
@@ -33,11 +34,13 @@ export const register = async (req: Request, res: Response, next: NextFunction) 
         let payload = {
             id: newuser.id
         }
+        
+        const {password: pass, ...rest} = (newuser as any)._doc
 
         const token = jwt.sign(payload, process.env.JWT_SECRET as string)
-        const expiresInWeek = 7 * 24 * 60 * 60
+        const expiresInWeek = 4 * 7 * 24 * 60 * 60
         const expiryDate = new Date(Date.now() + expiresInWeek * 1000)
-        return res.cookie("accessToken", token, { httpOnly: true, expires: expiryDate }).status(200).json({success: true})
+        return res.cookie("accessToken", token, { httpOnly: true, expires: expiryDate }).status(200).json({success: true, ...rest})
         
     } catch(err){
         return next(errorHandler)
@@ -65,14 +68,24 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
                 id: user.id
             }
 
+            const {password: pass, ...rest} = (user as any)._doc
+
             const token = jwt.sign(payload, process.env.JWT_SECRET as string)
-            const expiresInWeek = 7 * 24 * 60 * 60
+            const expiresInWeek = 4 * 7 * 24 * 60 * 60
             const expiryDate = new Date(Date.now() + expiresInWeek * 1000)
-            return res.cookie("accessToken", token, { httpOnly: true, expires: expiryDate }).status(200).json({success: true})
+            return res.cookie("accessToken", token, { httpOnly: true, expires: expiryDate }).status(200).json({success: true, ...rest})
         }
         else{
             return next(errorHandler(401, "INCORRECT_PASSWORD"))
         }
+    } catch(err){
+        return next(errorHandler)
+    }
+}
+
+export const logout = async (req: Request, res: Response, next: NextFunction) => {
+    try{
+        return res.clearCookie("accessToken").status(200).json({success: true})
     } catch(err){
         return next(errorHandler)
     }
