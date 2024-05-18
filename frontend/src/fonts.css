@@ -2,13 +2,3 @@
     font-family: Roboto;
     src: url('/fonts/Roboto/Roboto-Regular.ttf')
 }
-
-@font-face{
-    font-family: GaretLight;
-    src: url('/fonts/Garet/Garet-Book.woff2')
-}
-
-@font-face{
-    font-family: GaretHeavy;
-    src: url('/fonts/Garet/Garet-Heavy.woff2')
-}
