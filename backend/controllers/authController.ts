@@ -6,6 +6,10 @@ import { isLength } from "validator"
 import jwt from "jsonwebtoken"
 import { AuthBody } from "../types"
 
+/**
+ * This method helps users sign up to the shift booking system for authentication purposes.
+ * @param req.body Should contain the name of the user, email and their password
+ */
 export const register = async (req: Request, res: Response, next: NextFunction) => {
     try{
         const { name, email, password } : AuthBody = req.body
@@ -47,6 +51,10 @@ export const register = async (req: Request, res: Response, next: NextFunction) 
     }
 }
 
+/**
+ * This method helps users login to the shift booking system for authentication purposes.
+ * @param req.body Should contain the user's email and their password
+ */
 export const login = async (req: Request, res: Response, next: NextFunction) => {
     try{
         const { email, password } = req.body
@@ -83,6 +91,10 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
     }
 }
 
+/**
+ * This method helps users logout from the shift booking system
+ * @param req.cookie The cookie with the name accessToken will be cleared.
+ */
 export const logout = async (req: Request, res: Response, next: NextFunction) => {
     try{
         return res.clearCookie("accessToken").status(200).json({success: true})
