@@ -13,6 +13,10 @@ export const createShift = async (req: AuthenticatedRequest, res: Response, next
     try{
         const { date, startTime, endTime, role } : ShiftBody = req.body
 
+        if(!(date && startTime && endTime && role)){
+            return next(errorHandler(409, "Cannot create shift: One or more missing attributes or empty attributes found."))
+        }
+
         const user = req.user
 
         const availableUser = await User.findById(user.id)
