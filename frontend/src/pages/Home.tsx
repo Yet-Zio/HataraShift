@@ -21,7 +21,7 @@ export default function Home() {
       headers: {
         'Content-Type': 'application/json',
       },
-      withCredentials: true
+      withCredentials: true,
     }).then(response => {
       console.log(response)
     }).catch(err => {

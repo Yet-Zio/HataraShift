@@ -25,7 +25,8 @@ export default function Signup() {
         await axios.post(SIGNUP_API, signupDetails, {
             headers: {
                 'Content-Type': 'application/json'
-            }
+            },
+            withCredentials: true
         }).then(response => {
 
             console.log(response)
