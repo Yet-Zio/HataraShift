@@ -4,17 +4,19 @@ import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import {thunk} from 'redux-thunk'
 import dashboardReducer from "./dashboard/dashboardSlice";
+import shiftSubmitReducer from "./dashboard/shiftSubmitSlice";
 
 const rootPersistConfig = {
     key: 'root',
     storage,
     safelist: ['user'],
-    blacklist: ['dashboard']
+    blacklist: ['dashboard', 'shiftSubmit']
 }
 
 const rootReducer = combineReducers({
     user: userReducer,
-    dashboard: dashboardReducer
+    dashboard: dashboardReducer,
+    shiftSubmit: shiftSubmitReducer
 })
 
 const persistedReducer = persistReducer(rootPersistConfig, rootReducer)

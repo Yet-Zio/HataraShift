@@ -30,7 +30,7 @@ export default function Navbar() {
         <span className='text-2xl text-slate-900 ms-2 hover:cursor-pointer select-none font-bold' onClick={() => {window.location.href = "/"}}>HataraShift</span>
       </div>
       {userData.currentUser != null && ( <div className="flex w-full justify-end relative">
-        <button className="me-4 p-2 ps-4 pe-4 bg-purple-600 rounded-3xl text-slate-100" onClick={handleLogOut}>Log out</button>
+        <button className="me-4 p-2 ps-4 pe-4 bg-purple-600 hover:bg-purple-600/75 rounded-3xl text-slate-100" onClick={handleLogOut}>Log out</button>
       </div>)}
     </nav>
   )

@@ -7,6 +7,7 @@ interface PopupBoxProps{
     closebt?: boolean
     setSignupProcess?: Function
     setLoginProcess?: Function
+    normalSubmit?: Function
 }
 
 type SideOptions = 'Home' | 'CreateShifts' | 'AvailableShifts' | 'BookShifts' | 'BookedShifts' | 'CancelShifts'
@@ -18,4 +19,14 @@ interface PageToRenderProps{
 interface SideOptProps{
     option: string,
     name?: string
+}
+
+interface Shift {
+    _id: string
+    date: string
+    startTime: string
+    endTime: string
+    role: string
+    bookedBy: string | null
+    __v: number
 }

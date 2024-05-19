@@ -7,11 +7,14 @@ import LoadingAnimation from "../../assets/Loading.json"
 import {motion, AnimatePresence} from "framer-motion"
 import { CaretDown, XCircle } from "@phosphor-icons/react"
 import { useState } from "react"
+import { useHS_Dispatch } from "../../redux/hooks"
+import { changesubmit } from "../../redux/dashboard/shiftSubmitSlice"
 
-export default function PopupBox({type, message, moreinfo, closebt, setSignupProcess, setLoginProcess} : PopupBoxProps) {
+export default function PopupBox({type, message, moreinfo, closebt, setSignupProcess, setLoginProcess, normalSubmit} : PopupBoxProps) {
 
   const [showPopup, setShowPopup] = useState(true)
   const [expandInfo, setExpandInfo] = useState(false)
+  const dispatch = useHS_Dispatch()
 
   const renderPopupIcon = () => {
     switch (type){
@@ -103,6 +106,12 @@ export default function PopupBox({type, message, moreinfo, closebt, setSignupPro
                   }
                   else if(setLoginProcess){
                     setLoginProcess({start: false, success: false, done: false, loginres: ""})
+                  }
+                  else if(normalSubmit){
+                    normalSubmit({start: false, success: false, done: false, submitres: ""})
+                  }
+                  else{
+                    dispatch(changesubmit({start: false, success: false, done: false, submitres: "", message: ""}))
                   }
                 }}/>
               </div>

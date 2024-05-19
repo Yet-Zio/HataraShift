@@ -16,3 +16,10 @@ export const INCORRECT_PASSWORD = "INCORRECT_PASSWORD"
 
 export const UserNotFoundText = "An user associated with this email does not exist."
 export const IncorrectPasswordText = "Password entered was not correct!"
+
+// Shifts
+
+export const CANNOT_CREATE_SHIFT = "CANNOT_CREATE_SHIFT"
+export const CannotCreateShiftText = "Cannot create shift due to invalid format or missing attributes."
+
+export const UserNotFoundShiftText = "An user account was not found relating to the signed in user."
