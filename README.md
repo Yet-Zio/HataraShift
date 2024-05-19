@@ -44,7 +44,7 @@ The user can create shifts, view available shifts, book a shift, view booked shi
 1. Go to ```/frontend``` folder and install the dependencies with ```npm i```
 
 2. To run the frontend, simply type ```npm run dev``` or if you want to build
-    the server for production, then type
+    the frontend for production, then type
     ```
     npm run build
     ```
