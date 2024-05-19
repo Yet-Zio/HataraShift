@@ -8,7 +8,8 @@ import dashboardReducer from "./dashboard/dashboardSlice";
 const rootPersistConfig = {
     key: 'root',
     storage,
-    safelist: ['user']
+    safelist: ['user'],
+    blacklist: ['dashboard']
 }
 
 const rootReducer = combineReducers({

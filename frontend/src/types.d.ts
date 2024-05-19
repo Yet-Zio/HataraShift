@@ -9,12 +9,13 @@ interface PopupBoxProps{
     setLoginProcess?: Function
 }
 
-type SideOptions = 'Home' | 'Trending' | 'Explore'
+type SideOptions = 'Home' | 'CreateShifts' | 'AvailableShifts' | 'BookShifts' | 'BookedShifts' | 'CancelShifts'
 
 interface PageToRenderProps{
     pagetorender: SideOptions
 }
 
 interface SideOptProps{
-    option: string
+    option: string,
+    name?: string
 }

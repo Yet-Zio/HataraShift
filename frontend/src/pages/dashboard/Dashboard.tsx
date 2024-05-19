@@ -15,7 +15,15 @@ export default function Dashboard({pagetorender}: PageToRenderProps) {
     switch(pageToRender){
       case "Home":
         return <DashboardHome/>
-      case "Trending":
+      case "CreateShifts":
+        return <DashboardExample/>
+      case "AvailableShifts":
+        return <DashboardExample/>
+      case "BookShifts":
+        return <DashboardExample/>
+      case "BookedShifts":
+        return <DashboardExample/>
+      case "CancelShifts":
         return <DashboardExample/>
       default:
         return <DashboardHome/>

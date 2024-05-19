@@ -17,8 +17,11 @@ function App() {
           <Route path="/signup" element={<Signup/>}/>
           <Route path="/dashboard" element={<Dashboard pagetorender="Home"/>}/>
           <Route path="/dashboard/home" element={<Dashboard pagetorender="Home"/>}/>
-          <Route path="/dashboard/trending" element={<Dashboard pagetorender="Trending"/>}/>
-          <Route path="/dashboard/explore" element={<Dashboard pagetorender="Explore"/>}/>
+          <Route path="/dashboard/createshifts" element={<Dashboard pagetorender="CreateShifts"/>}/>
+          <Route path="/dashboard/availableshifts" element={<Dashboard pagetorender="AvailableShifts"/>}/>
+          <Route path="/dashboard/bookshifts" element={<Dashboard pagetorender="BookShifts"/>}/>
+          <Route path="/dashboard/bookedshifts" element={<Dashboard pagetorender="BookedShifts"/>}/>
+          <Route path="/dashboard/cancelshifts" element={<Dashboard pagetorender="CancelShifts"/>}/>
         </Routes>
       </Router>
     </div>

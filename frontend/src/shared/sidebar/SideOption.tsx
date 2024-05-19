@@ -1,9 +1,9 @@
-import { Binoculars, House, TrendUp } from "@phosphor-icons/react";
+import { CalendarCheck, CalendarDot, CalendarDots, CalendarX, House, Sparkle } from "@phosphor-icons/react";
 import { useHS_Dispatch, useHS_Selector } from "../../redux/hooks";
 import { change } from "../../redux/dashboard/dashboardSlice";
 import { useNavigate } from "react-router-dom";
 
-export default function SideOption({option}: SideOptProps) {
+export default function SideOption({option, name}: SideOptProps) {
 
   const selectedOption = useHS_Selector(state => state.dashboard.option)
   const dispatch = useHS_Dispatch()
@@ -13,23 +13,29 @@ export default function SideOption({option}: SideOptProps) {
     switch (option) {
         case "Home":
             return <House size={24} />
-        case "Trending":
-            return <TrendUp size={24} weight="fill"/>
-        case "Explore":
-            return <Binoculars size={24} />
+        case "CreateShifts":
+            return <Sparkle size={24}/>
+        case "AvailableShifts":
+            return <CalendarDots size={24}/>
+        case "BookShifts":
+            return <CalendarDot size={24}/>
+        case "BookedShifts":
+            return <CalendarCheck size={24}/>
+        case "CancelShifts":
+            return <CalendarX size={24}/>
         default:
-            return <House size={32} />
+            return <House size={24} />
     }
   }
 
   return (
-    <div className={`flex w-full h-10 ${selectedOption === option ? "bg-slate-300": "bg-transparent"} items-center hover:bg-slate-300 rounded-xl ps-3 cursor-pointer mb-3`}
+    <div className={`flex w-full h-10 ${selectedOption === option ? "bg-slate-200": "bg-transparent"} items-center hover:bg-slate-200 rounded-xl ps-3 cursor-pointer mb-3`}
       onClick={() => {
         dispatch(change(option))
         navigate(`/dashboard/${option.toLowerCase()}`)
         }}>
         {SideIcon()}
-        <span className="ms-3 text-base text-black useinter">{option}</span>
+        <span className="ms-3 text-base text-black useinter">{name}</span>
     </div>
   );
 }
