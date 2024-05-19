@@ -6,8 +6,11 @@ import DashboardHome from './pages/DashboardHome'
 import DashboardExample from './pages/DashboardExample'
 import CreateShifts from './pages/CreateShifts'
 import PopupBox from '../../components/modals/PopupBox'
-import { CANNOT_CREATE_SHIFT, CannotCreateShiftText, USER_NOT_FOUND, UserNotFoundShiftText } from '../../constants'
+import { CANNOT_CREATE_SHIFT, CannotCreateShiftText, EMPTY_SHIFT_ID, EmptyShiftIdText, SHIFT_ALREADY_BOOKED, SHIFT_ID_DOESNOTEXIST, ShiftAlreadyBooked, ShiftIdNotExistText, USER_NOT_FOUND, UserNotFoundShiftText } from '../../constants'
 import AvailableShifts from './pages/AvailableShifts'
+import BookShifts from './pages/BookShifts'
+import BookedShifts from './pages/BookedShifts'
+import CancelShifts from './pages/CancelShifts'
 
 export default function Dashboard({pagetorender}: PageToRenderProps) {
 
@@ -26,11 +29,11 @@ export default function Dashboard({pagetorender}: PageToRenderProps) {
       case "AvailableShifts":
         return <AvailableShifts/>
       case "BookShifts":
-        return <DashboardExample/>
+        return <BookShifts/>
       case "BookedShifts":
-        return <DashboardExample/>
+        return <BookedShifts/>
       case "CancelShifts":
-        return <DashboardExample/>
+        return <CancelShifts/>
       default:
         return <DashboardHome/>
     }
@@ -40,6 +43,7 @@ export default function Dashboard({pagetorender}: PageToRenderProps) {
     if(pagetorender){
       dispatch(change(pagetorender))
     }
+    document.title = "Dashboard"
   })
 
   const renderShiftProcess = () => {
@@ -53,6 +57,12 @@ export default function Dashboard({pagetorender}: PageToRenderProps) {
             return <PopupBox type="error" message="Could not create Shift" moreinfo={CannotCreateShiftText} closebt/>
           case USER_NOT_FOUND:
             return <PopupBox type="error" message="User not found!" moreinfo={UserNotFoundShiftText} closebt/>
+          case EMPTY_SHIFT_ID:
+            return <PopupBox type="error" message="Error: Empty Shift ID!" moreinfo={EmptyShiftIdText} closebt/>
+          case SHIFT_ID_DOESNOTEXIST:
+            return <PopupBox type="error" message="Error: Shift does not exist" moreinfo={ShiftIdNotExistText} closebt/>
+          case SHIFT_ALREADY_BOOKED:
+            return <PopupBox type="error" message="Error: Shift already booked" moreinfo={ShiftAlreadyBooked} closebt/>
           default:
             return <PopupBox type="error" message="Error" moreinfo="Something went wrong or invalid format found" closebt/>
         }
@@ -64,7 +74,7 @@ export default function Dashboard({pagetorender}: PageToRenderProps) {
   }
 
   return (
-    <div className='flex min-h-screen min-w-screen bg-slate-200'>
+    <div className='flex min-h-screen min-w-screen bg-slate-200 useroboto'>
       {userData.currentUser != null ? (
         <>
         {shiftSubmitProcess.start && (

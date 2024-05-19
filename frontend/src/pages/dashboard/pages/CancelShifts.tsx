@@ -6,31 +6,31 @@ import { CaretDown } from "@phosphor-icons/react"
 import { useHS_Dispatch } from "../../../redux/hooks"
 import { changesubmit, initialState } from "../../../redux/dashboard/shiftSubmitSlice"
 
-export default function BookShifts() {
+export default function CancelShifts() {
 
-    const [availableShifts, setAvailableShifts] = useState<Shift[]>([])
+    const [bookedShifts, setBookedShifts] = useState<Shift[]>([])
     const [selectedShift, setSelectedShift] = useState("1")
     const [showDetails, setShowDetails] = useState(false)
 
     const dispatch = useHS_Dispatch()
 
     useEffect(() => {
-        const getAvailableShifts = async () => {
-            await axios.get(`${API_URL}/api/shifts/available`, {
+        const getBookedShifts = async () => {
+            await axios.get(`${API_URL}/api/shifts/booked`, {
               headers: {
                 'Content-Type': 'application/json'
               },
               withCredentials: true
             }).then(response => {
                 
-                setAvailableShifts(response.data)
+                setBookedShifts(response.data)
 
             }).catch(err => {
               console.log(err)
             })
           }
         
-        getAvailableShifts()
+        getBookedShifts()
     }, [])
 
     const formatDate = (dateStr: string): string => {
@@ -46,26 +46,25 @@ export default function BookShifts() {
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault()
 
-        const shiftId = availableShifts[parseInt(selectedShift) - 1]._id
+        const shiftId = bookedShifts[parseInt(selectedShift) - 1]._id
 
         dispatch(changesubmit({
             ...initialState,
             start: true
         }))
-        await axios.post(`${API_URL}/api/shifts/book/${shiftId}`,{},
-            {
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                withCredentials: true
-            }
+        await axios.delete(`${API_URL}/api/shifts/book/${shiftId}`,{
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            withCredentials: true
+        }   
         ).then(response => {
             dispatch(changesubmit({
                 ...initialState,
                 start: true,
                 success: true,
                 done: true,
-                message: "Shift booked successfully!"
+                message: "Selected booking was cancelled successfully!"
             }))
             setTimeout(() => {
                 window.location.reload()
@@ -83,19 +82,19 @@ export default function BookShifts() {
 
   return (
     <div className='flex w-screen min-h-screen bg-transparent'>
-        {availableShifts.length > 0 ? (
-        <div className="flex flex-col w-full">
-            <p className='text-2xl useinter ps-5 pt-5 text-black font-bold'>Book a Shift</p>
+        {bookedShifts.length > 0 ? (
+            <div className="flex flex-col w-full">
+            <p className='text-2xl useinter ps-5 pt-5 text-black font-bold'>Cancel your bookings</p>
             <form className="mt-3" onSubmit={handleSubmit}>
                 <div className="flex items-center">
                     <label htmlFor="selectShift" className="me-5 mt-2">Select a Shift:</label>
-                    <select disabled={availableShifts.length === 0} id="selectShift" name="selectShift" className="w-44 mt-1 border border-slate-400 rounded-lg p-1" value={selectedShift} onChange={e => {setSelectedShift(e.target.value)}} required>
-                        {availableShifts.map((shift, index) =>(
+                    <select disabled={bookedShifts.length === 0} id="selectShift" name="selectShift" className="w-44 mt-1 border border-slate-400 rounded-lg p-1" value={selectedShift} onChange={e => {setSelectedShift(e.target.value)}} required>
+                        {bookedShifts.map((shift, index) =>(
                             <option key={shift._id} value={index + 1}>{index+1}</option>
                         ))}
                     </select>
                 </div>
-                {availableShifts.length !== 0 && (
+                {bookedShifts.length !== 0 && (
                 <motion.div
                     initial={{opacity: 0}}
                     animate={{opacity: 1}}
@@ -118,31 +117,28 @@ export default function BookShifts() {
                 >
                     <div className="flex items-center">
                         <span className="inter selection:bg-purple-500 text-slate-800 font-semibold me-4">Date: </span>
-                        <span className="inter selection:bg-purple-500 text-slate-800">{formatDate(availableShifts[parseInt(selectedShift)-1].date)}</span>
+                        <span className="inter selection:bg-purple-500 text-slate-800">{formatDate(bookedShifts[parseInt(selectedShift)-1].date)}</span>
                     </div>
                     <div className="flex items-center">
                         <span className="inter selection:bg-purple-500 text-slate-800 font-semibold me-4">Start time: </span>
-                        <span className="inter selection:bg-purple-500 text-slate-800">{availableShifts[parseInt(selectedShift)-1].startTime}</span>
+                        <span className="inter selection:bg-purple-500 text-slate-800">{bookedShifts[parseInt(selectedShift)-1].startTime}</span>
                     </div>
                     <div className="flex items-center">
                         <span className="inter selection:bg-purple-500 text-slate-800 font-semibold me-4">End time: </span>
-                        <span className="inter selection:bg-purple-500 text-slate-800">{availableShifts[parseInt(selectedShift)-1].endTime}</span>
+                        <span className="inter selection:bg-purple-500 text-slate-800">{bookedShifts[parseInt(selectedShift)-1].endTime}</span>
                     </div>
                     <div className="flex items-center">
                         <span className="inter selection:bg-purple-500 text-slate-800 font-semibold me-4">Role: </span>
-                        <span className="inter selection:bg-purple-500 text-slate-800">{availableShifts[parseInt(selectedShift)-1].role}</span>
+                        <span className="inter selection:bg-purple-500 text-slate-800">{bookedShifts[parseInt(selectedShift)-1].role}</span>
                     </div>
                 </motion.div>
                 )}
-                <button type="submit" className="p-2 ps-5 pe-5 rounded-xl bg-purple-500 hover:bg-purple-500/75 text-slate-100">Book shift</button>
+                <button type="submit" className="p-2 ps-5 pe-5 rounded-xl bg-purple-500 hover:bg-purple-500/75 text-slate-100">Cancel booking</button>
             </form>
         </div>
         ) : (
-            <div className="flex flex-col w-full">
-                <p className='text-2xl useinter ps-5 pt-5 text-black font-bold'>No available shifts to book</p>
-            </div>
+            <p className='text-2xl useinter ps-5 pt-5 text-black font-bold'>You haven't booked any shifts</p>
         )}
-        
     </div>
   )
 }

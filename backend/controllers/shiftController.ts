@@ -48,7 +48,7 @@ export const availableShifts = async (req: AuthenticatedRequest, res: Response, 
         const availableUser = await User.findById(user.id)
 
         if(!availableUser){
-            return next(errorHandler(404, "User does not exist to view available shifts!"))
+            return next(errorHandler(404, "USER_NOT_FOUND"))
         }
 
         const availableShifts = await Shift.find({bookedBy: null})
@@ -73,29 +73,29 @@ export const bookShift = async (req: AuthenticatedRequest, res: Response, next: 
         const availableUser = await User.findById(user.id)
 
         if(!availableUser){
-            return next(errorHandler(404, "User does not exist to book shifts!"))
+            return next(errorHandler(404, "USER_NOT_FOUND"))
         }
 
         const shiftId = req.params.shiftId
 
         if(!shiftId){
-            return next(errorHandler(409, "Shift ID cannot be empty!"))
+            return next(errorHandler(409, "EMPTY_SHIFT_ID"))
         }
 
         const bookShift = await Shift.findById(shiftId)
         
         if(!bookShift){
-            return next(errorHandler(404, "A shift with this shiftId does not exist!"))
+            return next(errorHandler(404, "SHIFT_ID_DOESNOTEXIST"))
         }
 
         if(bookShift.bookedBy != null){
-            return res.status(409).json({success: false, shiftId, message: `Shift has already been booked.`})
+            return res.status(409).json({success: false, shiftId, message: 'SHIFT_ALREADY_BOOKED'})
         }
         
         bookShift.bookedBy = availableUser._id
 
         await bookShift.save()
-        return res.status(200).json({success: true, message: "Shift booked successfully!", shiftId})
+        return res.status(200).json({success: true, message: "SHIFT_BOOKED_SUCCESSFULLY!", shiftId})
 
     }
     catch(err){
@@ -115,7 +115,7 @@ export const viewBookedShifts = async (req: AuthenticatedRequest, res: Response,
         const availableUser = await User.findById(user.id)
 
         if(!availableUser){
-            return next(errorHandler(404, "User does not exist to view booked shifts!"))
+            return next(errorHandler(404, "USER_NOT_FOUND"))
         }
 
         const bookedShifts = await Shift.find({bookedBy: availableUser._id})
@@ -140,33 +140,33 @@ export const cancelBookedShift = async (req: AuthenticatedRequest, res: Response
         const availableUser = await User.findById(user.id)
 
         if(!availableUser){
-            return next(errorHandler(404, "User does not exist to view booked shifts!"))
+            return next(errorHandler(404, "USER_NOT_FOUND"))
         }
 
         const shiftId = req.params.shiftId
 
         if(!shiftId){
-            return next(errorHandler(409, "Shift ID cannot be empty!"))
+            return next(errorHandler(409, "EMPTY_SHIFT_ID"))
         }
 
         const bookedShift = await Shift.findById(shiftId)
         
         if(!bookedShift){
-            return next(errorHandler(404, "A shift with this shiftId does not exist!"))
+            return next(errorHandler(404, "SHIFT_ID_DOESNOTEXIST"))
         }
 
         if(bookedShift.bookedBy != null){
             if(bookedShift.bookedBy.equals(availableUser._id)){
                 bookedShift.bookedBy = null
                 await bookedShift.save()
-                return res.status(200).json({success: true, shiftId, message: "Booking has been cancelled!"})
+                return res.status(200).json({success: true, shiftId, message: "BOOKING_CANCELLED"})
             }
             else{
-                return res.status(401).json({success: false, shiftId, message: "You are not allowed to cancel this booking!"})
+                return res.status(401).json({success: false, shiftId, message: "CANCEL_NOT_ALLOWED"})
             }
         }
         else{
-            return res.status(409).json({success: false, shiftId, message: "The shift was not booked previously to be cancelled!"})
+            return res.status(409).json({success: false, shiftId, message: "NOT_BOOKED_PREVIOUSLY"})
         }
         
     }

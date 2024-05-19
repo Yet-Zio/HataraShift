@@ -20,6 +20,13 @@ export const IncorrectPasswordText = "Password entered was not correct!"
 // Shifts
 
 export const CANNOT_CREATE_SHIFT = "CANNOT_CREATE_SHIFT"
-export const CannotCreateShiftText = "Cannot create shift due to invalid format or missing attributes."
+export const EMPTY_SHIFT_ID = "EMPTY_SHIFT_ID"
+export const SHIFT_ID_DOESNOTEXIST = "SHIFT_ID_DOESNOTEXIST"
+export const SHIFT_ALREADY_BOOKED = "SHIFT_ALREADY_BOOKED"
 
+export const CannotCreateShiftText = "Cannot create shift due to invalid format or missing attributes."
 export const UserNotFoundShiftText = "An user account was not found relating to the signed in user."
+
+export const EmptyShiftIdText = "Shift id was empty to book. Did you select one?"
+export const ShiftIdNotExistText = "This shift does not exist."
+export const ShiftAlreadyBooked = "This shift has been already booked."

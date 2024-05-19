@@ -35,7 +35,9 @@ export default function AvailableShifts() {
         return `${year}-${month}-${day}`
     }
   return (
-    <div className="flex flex-col w-screen min-h-screen bg-transparent useroboto pe-7">
+    <div className="flex flex-col w-screen min-h-screen bg-transparent pe-7">
+      {availableShifts.length > 0 ? (
+        <>
         <p className='text-2xl useinter ps-5 pt-5 text-black font-bold'>Available Shifts</p>
         <table className="min-w-full mt-5 border-collapse border bg-lime-100/50 border-gray-300">
             <thead>
@@ -59,6 +61,11 @@ export default function AvailableShifts() {
             ))}
             </tbody>
         </table>
+        </>
+      ) : (
+        <p className='text-2xl useinter ps-5 pt-5 text-black font-bold'>No available shifts</p>
+      )}
+        
     </div>
   )
 }
