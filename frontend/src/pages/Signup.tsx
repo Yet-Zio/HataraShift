@@ -1,9 +1,12 @@
 import { FormEvent, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { API_URL } from "../constants";
+import { Link, useNavigate } from "react-router-dom";
+import { API_URL , EMAIL_ALREADY_EXISTS, PASSWORD_LENGTH_FAILURE, PW_CRITERIA_FAILURE,
+    EmailAlreadyExistsText, PasswordLengthFailure, PassCriteriaFailureText
+} from "../constants";
 import axios from "axios";
 import { useHS_Dispatch } from "../redux/hooks";
 import { login } from "../redux/user/userSlice";
+import PopupBox from "../components/modals/PopupBox";
 
 export default function Signup() {
     useEffect(() => {
@@ -19,26 +22,75 @@ export default function Signup() {
     const SIGNUP_API = `${API_URL}/api/auth/register`
 
     const dispatch = useHS_Dispatch()
+
+    const [signupProcess, setSignupProcess] = useState({start: false, success: false, done: false, signupres: ""})
+
+    const renderSignupProgress = () => {
+        if(signupProcess.done){
+          if(signupProcess.success){
+            return <PopupBox type="success" message="Account created successfully!"/>
+          }
+          else{
+            switch(signupProcess.signupres){
+                case EMAIL_ALREADY_EXISTS:
+                    return <PopupBox type="error" message="Account creation failed!" moreinfo={EmailAlreadyExistsText} closebt setSignupProcess={setSignupProcess}/>
+                case PASSWORD_LENGTH_FAILURE:
+                    return <PopupBox type="error" message="Account creation failed!" moreinfo={PasswordLengthFailure} closebt setSignupProcess={setSignupProcess}/>
+                case PW_CRITERIA_FAILURE:
+                    return <PopupBox type="error" message="Account creation failed!" moreinfo={PassCriteriaFailureText} closebt setSignupProcess={setSignupProcess}/>
+                default:
+                    return <PopupBox type="error" message="Account creation failed!" moreinfo="Something went wrong or invalid format" closebt setSignupProcess={setSignupProcess}/>
+            }
+          }
+        }
+        else{
+          return <PopupBox type="loading"/>
+        }
+    }
+    
+
+    const navigate = useNavigate()
     
     const handleSubmit = async(e: FormEvent) => {
         e.preventDefault()
+
+        setSignupProcess({
+            ...signupProcess,
+            start: true
+        })
+
         await axios.post(SIGNUP_API, signupDetails, {
             headers: {
                 'Content-Type': 'application/json'
             },
             withCredentials: true
         }).then(response => {
-
-            console.log(response)
+            setSignupProcess({
+                ...signupProcess,
+                start: true,
+                success: true,
+                done: true,
+            })
             dispatch(login(response.data))
-            
+            navigate("/dashboard")
+
         }).catch(err => {
+            setSignupProcess({
+                ...signupProcess,
+                start: true,
+                success: false,
+                done: true,
+                signupres: err.response.data.message
+            })
             console.log(err)
         })
     }
 
   return (
     <section className="bg-slate-200">
+        {signupProcess.start && (
+            renderSignupProgress()
+        )}
         <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
             <div className="w-full bg-slate-100 rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0">
                 <div className="p-6 space-y-4 md:space-y-6 sm:p-8">

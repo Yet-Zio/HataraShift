@@ -28,6 +28,17 @@ export const register = async (req: Request, res: Response, next: NextFunction) 
             return next(errorHandler(409, "PASSWORD_LENGTH_FAILURE"))
         }
 
+        const passcriteria = [
+            'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+            'abcdefghijklmnopqrstuvwxyz',
+            '0123456789',
+            '!@#$%^&*()_+-=[]{}|\\:;\"\'<>,.?/'
+        ]
+
+        if(!passcriteria.every(chars => { return chars.split('').some(char => {return password.includes(char)})})){
+            return next(errorHandler(409, "PW_CRITERIA_FAILURE"))
+        }
+
         const saltRounds = 10
         const hashPass = await hash(password, saltRounds)
 

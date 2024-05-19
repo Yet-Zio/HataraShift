@@ -1,1 +1,18 @@
 export const API_URL = "http://localhost:3000"
+
+
+// Sign up
+export const EMAIL_ALREADY_EXISTS = "EMAIL_ALREADY_EXISTS"
+export const PASSWORD_LENGTH_FAILURE = "PASSWORD_LENGTH_FAILURE"
+export const PW_CRITERIA_FAILURE = "PW_CRITERIA_FAILURE"
+
+export const EmailAlreadyExistsText = "An account already exists with this email."
+export const PasswordLengthFailure = "Passwords should be a minimum length of 8 characters. The maximum is 256 characters."
+export const PassCriteriaFailureText = "Passwords must contain uppercase and lowercase characters and should also include numbers and special symbols like !@#$%^&*()_+-=[]{}|\\:;\"'<>.,.?/"
+
+// Log in
+export const USER_NOT_FOUND = "USER_NOT_FOUND"
+export const INCORRECT_PASSWORD = "INCORRECT_PASSWORD"
+
+export const UserNotFoundText = "An user associated with this email does not exist."
+export const IncorrectPasswordText = "Password entered was not correct!"
