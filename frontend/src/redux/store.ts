@@ -18,7 +18,9 @@ const persistedReducer = persistReducer(rootPersistConfig, rootReducer)
 
 const store = configureStore({
     reducer: persistedReducer,
-    middleware: () => new Tuple(thunk)
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware({
+        serializableCheck: false,
+    }),
 })
 
 export default store

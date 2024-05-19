@@ -44,7 +44,7 @@ export const register = async (req: Request, res: Response, next: NextFunction) 
         const token = jwt.sign(payload, process.env.JWT_SECRET as string)
         const expiresInWeek = 4 * 7 * 24 * 60 * 60
         const expiryDate = new Date(Date.now() + expiresInWeek * 1000)
-        return res.cookie("accessToken", token, { httpOnly: true, expires: expiryDate, sameSite: 'lax' }).status(200).json({success: true, ...rest})
+        return res.cookie("accessToken", token, { httpOnly: false, expires: expiryDate }).status(200).json({success: true, ...rest})
         
     } catch(err){
         return next(errorHandler)
@@ -81,7 +81,7 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
             const token = jwt.sign(payload, process.env.JWT_SECRET as string)
             const expiresInWeek = 4 * 7 * 24 * 60 * 60
             const expiryDate = new Date(Date.now() + expiresInWeek * 1000)
-            return res.cookie("accessToken", token, { httpOnly: true, expires: expiryDate, sameSite: 'lax' }).status(200).json({success: true, ...rest})
+            return res.cookie("accessToken", token, { httpOnly: false, expires: expiryDate }).status(200).json({success: true, ...rest})
         }
         else{
             return next(errorHandler(401, "INCORRECT_PASSWORD"))

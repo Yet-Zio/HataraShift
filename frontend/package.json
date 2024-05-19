@@ -20,7 +20,6 @@
     "redux-thunk": "^3.1.0",
     "sweetalert": "^2.1.2"
   },
-  "proxy": "http://127.0.0.1:3000",
   "devDependencies": {
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",

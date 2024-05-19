@@ -12,6 +12,8 @@ import { AuthenticatedRequest } from "../types"
 export const authenticateJWT = async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
     const token = req.cookies.accessToken
 
+    console.log(req.cookies)
+
     if(!token){
         return next(errorHandler(401, "Unauthorized"))
     }

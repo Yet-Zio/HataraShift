@@ -1,7 +1,9 @@
-import { useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { API_URL } from "../constants";
 import axios from "axios";
+import { useHS_Dispatch } from "../redux/hooks";
+import { login } from "../redux/user/userSlice";
 
 export default function Signup() {
     useEffect(() => {
@@ -14,21 +16,24 @@ export default function Signup() {
 
     const [signupDetails, setSignupDetails] = useState({name: "", email: "", password: ""})
 
-    const SIGNUP_API = `${API_URL}/api/auth/signup`
+    const SIGNUP_API = `${API_URL}/api/auth/register`
 
+    const dispatch = useHS_Dispatch()
     
-    const handleSubmit = async() => {
-        try {
-            const result = await axios.post(SIGNUP_API, signupDetails, {
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
-            
-        }
-        catch(err){
+    const handleSubmit = async(e: FormEvent) => {
+        e.preventDefault()
+        await axios.post(SIGNUP_API, signupDetails, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(response => {
 
-        }
+            console.log(response)
+            dispatch(login(response.data))
+            
+        }).catch(err => {
+            console.log(err)
+        })
     }
 
   return (
