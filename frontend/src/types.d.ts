@@ -8,3 +8,13 @@ interface PopupBoxProps{
     setSignupProcess?: Function
     setLoginProcess?: Function
 }
+
+type SideOptions = 'Home' | 'Trending' | 'Explore'
+
+interface PageToRenderProps{
+    pagetorender: SideOptions
+}
+
+interface SideOptProps{
+    option: string
+}
