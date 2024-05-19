@@ -14,7 +14,7 @@ export default function Navbar() {
         'Content-Type': 'application/json'
       },
       withCredentials: true
-    }).then(response => {
+    }).then(() => {
 
       dispatch(logout())
       window.location.href = "/"

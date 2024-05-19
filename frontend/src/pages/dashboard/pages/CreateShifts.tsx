@@ -88,7 +88,7 @@ export default function CreateShifts() {
                 },
                 withCredentials: true
             }
-        ).then(response => {
+        ).then(() => {
             dispatch(changesubmit({
                 ...initialState,
                 start: true,

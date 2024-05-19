@@ -59,7 +59,7 @@ export default function BookShifts() {
                 },
                 withCredentials: true
             }
-        ).then(response => {
+        ).then(() => {
             dispatch(changesubmit({
                 ...initialState,
                 start: true,
