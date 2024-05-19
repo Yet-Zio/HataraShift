@@ -3,10 +3,11 @@ import { useHS_Dispatch, useHS_Selector } from '../../redux/hooks'
 import { useEffect } from 'react'
 import { change } from '../../redux/dashboard/dashboardSlice'
 import DashboardHome from './pages/DashboardHome'
-import DashboardExample from './pages/DashboardExample'
 import CreateShifts from './pages/CreateShifts'
 import PopupBox from '../../components/modals/PopupBox'
-import { CANNOT_CREATE_SHIFT, CannotCreateShiftText, EMPTY_SHIFT_ID, EmptyShiftIdText, SHIFT_ALREADY_BOOKED, SHIFT_ID_DOESNOTEXIST, ShiftAlreadyBooked, ShiftIdNotExistText, USER_NOT_FOUND, UserNotFoundShiftText } from '../../constants'
+import { CANCEL_NOT_ALLOWED, CANNOT_CREATE_SHIFT, CancelNotAllowed, CannotCreateShiftText, EMPTY_SHIFT_ID, 
+  EmptyShiftIdText, NOT_BOOKED_PREVIOUSLY, NotBookedPreviouslyText, SHIFT_ALREADY_BOOKED, SHIFT_ID_DOESNOTEXIST, 
+  ShiftAlreadyBooked, ShiftIdNotExistText, USER_NOT_FOUND, UserNotFoundShiftText } from '../../constants'
 import AvailableShifts from './pages/AvailableShifts'
 import BookShifts from './pages/BookShifts'
 import BookedShifts from './pages/BookedShifts'
@@ -63,6 +64,10 @@ export default function Dashboard({pagetorender}: PageToRenderProps) {
             return <PopupBox type="error" message="Error: Shift does not exist" moreinfo={ShiftIdNotExistText} closebt/>
           case SHIFT_ALREADY_BOOKED:
             return <PopupBox type="error" message="Error: Shift already booked" moreinfo={ShiftAlreadyBooked} closebt/>
+          case CANCEL_NOT_ALLOWED:
+            return <PopupBox type="error" message="Error: You cannot cancel this booking" moreinfo={CancelNotAllowed} closebt/>
+          case NOT_BOOKED_PREVIOUSLY:
+            return <PopupBox type="error" message="Error: This booking was not previously booked" moreinfo={NotBookedPreviouslyText} closebt/>
           default:
             return <PopupBox type="error" message="Error" moreinfo="Something went wrong or invalid format found" closebt/>
         }

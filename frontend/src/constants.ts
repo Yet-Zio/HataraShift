@@ -24,9 +24,15 @@ export const EMPTY_SHIFT_ID = "EMPTY_SHIFT_ID"
 export const SHIFT_ID_DOESNOTEXIST = "SHIFT_ID_DOESNOTEXIST"
 export const SHIFT_ALREADY_BOOKED = "SHIFT_ALREADY_BOOKED"
 
+export const CANCEL_NOT_ALLOWED = "CANCEL_NOT_ALLOWED"
+export const NOT_BOOKED_PREVIOUSLY = "NOT_BOOKED_PREVIOUSLY"
+
 export const CannotCreateShiftText = "Cannot create shift due to invalid format or missing attributes."
 export const UserNotFoundShiftText = "An user account was not found relating to the signed in user."
 
 export const EmptyShiftIdText = "Shift id was empty to book. Did you select one?"
 export const ShiftIdNotExistText = "This shift does not exist."
 export const ShiftAlreadyBooked = "This shift has been already booked."
+
+export const CancelNotAllowed = "You are not authorized to cancel this booking."
+export const NotBookedPreviouslyText = "This shift was not previously booked!"
