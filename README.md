@@ -8,6 +8,62 @@ User registration and login is required for any of the operations.
 
 The user can create shifts, view available shifts, book a shift, view booked shifts, cancel their booking, etc.
 
+Instructions on how to run can be seen at [bottom](https://github.com/Yet-Zio/HataraShift)
+
+## API Endpoints
+
+### Authentication
+
+1. **User Registration**
+   - **Endpoint**: `POST /api/auth/register`
+   - **Description**: Registers a new user.
+   - **Request Body**: `{ name, email, password }`
+   - **Response**: `{ success, ...userData }`
+
+2. **User Login**
+   - **Endpoint**: `POST /api/auth/login`
+   - **Description**: Logs in an existing user.
+   - **Request Body**: `{ username, password }`
+   - **Response**: `{ success, ...userData }`
+
+3. **User Logout**
+   - **Endpoint**: `POST /api/auth/logout`
+   - **Description**: Logs out the authenticated user.
+   - **Response**: `{ success }`
+
+### Shift Management
+
+1. **Create Shift**
+   - **Endpoint**: `POST /api/shifts`
+   - **Description**: Creates a new shift.
+   - **Middleware**: `authenticateJWT` (ensures the user is authenticated).
+   - **Request Body**: `{ date, startTime, endTime, role }`
+   - **Response**: `{ shiftId }`
+
+2. **Get Available Shifts**
+   - **Endpoint**: `GET /api/shifts/available`
+   - **Description**: Retrieves a list of available shifts that have not been booked.
+   - **Middleware**: `authenticateJWT`
+   - **Response**: `[ { shiftId, date, startTime, endTime, role } ]`
+
+3. **Book Shift**
+   - **Endpoint**: `POST /api/shifts/book/:shiftId`
+   - **Description**: Books a shift specified by the `shiftId`.
+   - **Middleware**: `authenticateJWT`
+   - **Response**: `{ success, message, shiftId }`
+
+4. **View Booked Shifts**
+   - **Endpoint**: `GET /api/shifts/booked`
+   - **Description**: Retrieves a list of shifts booked by the authenticated user.
+   - **Middleware**: `authenticateJWT`
+   - **Response**: `[ { shiftId, date, startTime, endTime, role } ]`
+
+5. **Cancel Booking**
+   - **Endpoint**: `DELETE /api/shifts/book/:shiftId`
+   - **Description**: Cancels a booking for a shift specified by the `shiftId`.
+   - **Middleware**: `authenticateJWT`
+   - **Response**: `{ success, message, shiftId }`
+
 ## Instructions on how to run
 
 ### Backend
