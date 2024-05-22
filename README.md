@@ -8,7 +8,7 @@ User registration and login is required for any of the operations.
 
 The user can create shifts, view available shifts, book a shift, view booked shifts, cancel their booking, etc.
 
-Instructions on how to run can be seen at [bottom](https://github.com/Yet-Zio/HataraShift)
+Instructions on how to run can be seen at [bottom](https://github.com/Yet-Zio/HataraShift#backend)
 
 ## API Endpoints
 
